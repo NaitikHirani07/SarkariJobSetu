@@ -1,3 +1,4 @@
+/*
 // Image paths (using public directory instead of imports)
 const GovtJobs = '/images/Govt-Jobs.png';
 const RailwayJobs = '/images/Railway_Jobs.png';
@@ -16,3 +17,7 @@ const LogoWebp = '/images/cropped-sabhijobs.webp';
 // The rest of the file is identical to the original.
 
 export { GovtJobs, RailwayJobs, BankJobs, PostalJobs, JudicialJobs, TeachingJobs, EngineeringJobs, ClericalJobs, MedicalJobs, Logo, LogoWebp };
+*/
+
+export default {};
+

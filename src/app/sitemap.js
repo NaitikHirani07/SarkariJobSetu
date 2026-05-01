@@ -1,4 +1,4 @@
-import { govtJobsList } from '@/data/jobsData';
+import prisma from '@/lib/prisma';
 import { 
     categories, 
     educationVacancies, 
@@ -61,8 +61,12 @@ export default async function sitemap() {
         priority: 0.7,
     }));
 
-    // Dynamic Job Detail routes
-    const jobRoutes = govtJobsList.map((job) => ({
+    // Dynamic Job Detail routes from Database
+    const jobs = await prisma.job.findMany({
+        select: { id: true }
+    });
+
+    const jobRoutes = jobs.map((job) => ({
         url: `${baseUrl}/job-details/${job.id}`,
         lastModified: new Date(),
         changeFrequency: 'monthly',

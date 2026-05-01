@@ -1,4 +1,4 @@
-import { govtJobsList } from '@/data/jobsData';
+import { getJobsByCategory } from '@/lib/fetchers';
 import CentralGovtJobsClient from '@/components/CentralGovtJobsClient';
 
 export const metadata = {
@@ -7,10 +7,8 @@ export const metadata = {
     keywords: ['central govt jobs', 'government recruitment', 'upsc recruitment', 'ssc recruitment', 'central government vacancies'],
 };
 
-export default function CentralGovtJobsPage() {
-    const centralGovtJobs = govtJobsList.filter(job => 
-        Array.isArray(job.category) ? job.category.includes('CentralGovtJob') : job.category === 'CentralGovtJob'
-    );
+export default async function CentralGovtJobsPage() {
+    const centralGovtJobs = await getJobsByCategory("CentralGovtJob");
 
     return <CentralGovtJobsClient centralGovtJobs={centralGovtJobs} />;
 }

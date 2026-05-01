@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Job {
+  id              Int                @id @default(autoincrement())
+  organization    String
+  postName        String
+  qualification   String
+  vacancy         String
+  lastDate        String
+  title           String
+  postDescription String             @db.Text
+  salary          String?
+  ageLimit        String?
+  startDate       String?
+  examDate        String?
+  createdAt       DateTime           @default(now())
+  categories      JobCategory[]
+  notifications   JobNotification[]
+  links           JobLink[]
+  selectionProcess SelectionProcess[]
+  ageRelaxations   AgeRelaxation[]
+  applicationFees  ApplicationFee[]
+}
+
+model Category {
+  id    Int           @id @default(autoincrement())
+  name  String        @unique
+  jobs  JobCategory[]
+}
+
+model JobCategory {
+  jobId      Int
+  categoryId Int
+  job        Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([jobId, categoryId])
+}
+
+model JobNotification {
+  id    Int    @id @default(autoincrement())
+  jobId Int
+  label String
+  value String
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+
+model JobLink {
+  id    Int    @id @default(autoincrement())
+  jobId Int
+  label String
+  url   String @db.Text
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+
+model SelectionProcess {
+  id    Int    @id @default(autoincrement())
+  jobId Int
+  step  String
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+
+model AgeRelaxation {
+  id    Int    @id @default(autoincrement())
+  jobId Int
+  rule  String
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+
+model ApplicationFee {
+  id    Int    @id @default(autoincrement())
+  jobId Int
+  fee   String
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+
+// --- Dynamic Site Assets Models ---
+
+model AssetCategory {
+  id       Int     @id @default(autoincrement())
+  name     String
+  icon     String? @db.Text
+  link     String
+  useEmoji Boolean @default(false)
+}
+
+model EducationVacancy {
+  id   Int    @id @default(autoincrement())
+  name String
+  link String
+}
+
+model PostWiseRecruitment {
+  id   Int    @id @default(autoincrement())
+  name String
+  link String
+}
+
+model FAQ {
+  id       Int    @id @default(autoincrement())
+  question String @db.Text
+  answer   String @db.Text
+}
+

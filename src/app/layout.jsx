@@ -48,13 +48,17 @@ export const metadata = {
     },
 };
 
-export default function RootLayout({ children }) {
+import { getAssetCategories } from '@/lib/fetchers';
+
+export default async function RootLayout({ children }) {
+    const categories = await getAssetCategories();
+    
     return (
         <html lang="en">
             <body>
                 <ShopContextProvider>
                     <div className="min-h-screen bg-gray-100">
-                        <Navbar />
+                        <Navbar categories={categories} />
                         <main>
                             {children}
                         </main>

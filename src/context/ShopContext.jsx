@@ -1,8 +1,8 @@
 'use client';
 
-import { createContext, useContext, useState, useMemo } from 'react';
-import { categories, educationVacancies, postWiseRecruitment, sarkariResultSections, sarkariResultInfo, images, allSearchableItems, sidebarData } from '@/data/assets';
-import { govtJobsList } from '@/data/jobsData';
+import { createContext, useContext, useState, useMemo, useEffect } from 'react';
+// import { categories, educationVacancies, postWiseRecruitment, sarkariResultSections, sarkariResultInfo, images, allSearchableItems, sidebarData } from '@/data/assets';
+// import { govtJobsList } from '@/data/jobsData';
 
 
 // Create the context
@@ -22,6 +22,8 @@ export const ShopContextProvider = ({ children }) => {
     // Search state
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     // Search functions
     const openSearch = () => {
@@ -48,77 +50,42 @@ export const ShopContextProvider = ({ children }) => {
         }
     };
 
-    // Live search results - filters items based on search query
-    const searchResults = useMemo(() => {
-        if (!searchQuery.trim()) {
-            return [];
-        }
+    // Live search results from database
+    useEffect(() => {
+        const fetchResults = async () => {
+            if (!searchQuery.trim() || searchQuery.length < 2) {
+                setSearchResults([]);
+                return;
+            }
 
-        const query = searchQuery.toLowerCase().trim();
+            setIsLoading(true);
+            try {
+                const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
+                const data = await response.json();
+                setSearchResults(data);
+            } catch (error) {
+                console.error('Failed to fetch search results:', error);
+                setSearchResults([]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-        // Filter all searchable items based on the query
-        const results = allSearchableItems.filter(item => {
-            const name = item.name.toLowerCase();
-            const category = item.category?.toLowerCase() || '';
-
-            // Check if query matches name or category
-            return name.includes(query) || category.includes(query);
-        });
-
-        // Sort results - exact matches first, then partial matches
-        results.sort((a, b) => {
-            const aName = a.name.toLowerCase();
-            const bName = b.name.toLowerCase();
-            const aStartsWith = aName.startsWith(query);
-            const bStartsWith = bName.startsWith(query);
-
-            if (aStartsWith && !bStartsWith) return -1;
-            if (!aStartsWith && bStartsWith) return 1;
-            return 0;
-        });
-
-        // Limit results to 8 items for better UX
-        return results.slice(0, 8);
+        const timeoutId = setTimeout(fetchResults, 300); // Debounce search
+        return () => clearTimeout(timeoutId);
     }, [searchQuery]);
 
     // All data and logic can be managed here
     const value = {
-        // Categories data
-        categories,
-
-        // Education Vacancies data
-        educationVacancies,
-
-        // Post Wise Recruitment data
-        postWiseRecruitment,
-
-        // Sarkari Result Info data
-        sarkariResultSections,
-        sarkariResultInfo,
-
-        // Images
-        images,
-
-        // All searchable items
-        allSearchableItems,
-
-        // Govt Jobs data
-        govtJobsList,
-        sidebarData,
-
-
         // Search state and functions
         isSearchOpen,
         searchQuery,
         searchResults,
+        isLoading,
         openSearch,
         closeSearch,
         handleSearchChange,
         handleSearchSubmit,
-
-        // Helper functions
-        getCategoryById: (id) => categories.find((cat) => cat.id === id),
-        getCategoryByName: (name) => categories.find((cat) => cat.name.toLowerCase() === name.toLowerCase()),
     };
 
     return (

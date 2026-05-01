@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useShop } from '@/context/ShopContext';
 
-const Navbar = () => {
+const Navbar = ({ categories = [] }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isGovtJobsOpen, setIsGovtJobsOpen] = useState(false);
     const { isSearchOpen, searchQuery, searchResults, openSearch, closeSearch, handleSearchChange, handleSearchSubmit } = useShop();
@@ -66,11 +66,19 @@ const Navbar = () => {
                                     <svg className={`ml-1 w-4 h-4 transition-transform ${isGovtJobsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                                 </button>
                                 <div className={`absolute left-0 mt-0 w-48 bg-white rounded-md shadow-lg py-1 z-50 transform transition-all duration-200 ${isGovtJobsOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onMouseEnter={() => setIsGovtJobsOpen(true)} onMouseLeave={() => setIsGovtJobsOpen(false)}>
-                                    <Link href="/railway-jobs" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Railway Jobs</Link>
-                                    <Link href="/bank-jobs" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Bank Jobs</Link>
-                                    <Link href="/defence-jobs" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Defence Jobs</Link>
-                                    <Link href="/police-jobs" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Police Jobs</Link>
-                                    <Link href="/teaching-jobs" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Teaching Jobs</Link>
+                                    {categories.length > 0 ? (
+                                        categories.map((cat) => (
+                                            <Link key={cat.id} href={cat.link} className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">{cat.name}</Link>
+                                        ))
+                                    ) : (
+                                        <>
+                                            <Link href="/railway-jobs" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Railway Jobs</Link>
+                                            <Link href="/bank-jobs" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Bank Jobs</Link>
+                                            <Link href="/defence-jobs" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Defence Jobs</Link>
+                                            <Link href="/police-jobs" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Police Jobs</Link>
+                                            <Link href="/teaching-jobs" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Teaching Jobs</Link>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                             <Link href="/sarkari-result" className="text-white px-4 py-2 text-sm font-medium hover:bg-[#1565C0] transition-colors">Sarkari Result</Link>
@@ -99,12 +107,20 @@ const Navbar = () => {
                                 Govt Jobs
                                 <svg className={`w-4 h-4 transition-transform ${isGovtJobsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                             </button>
-                            <div className={`pl-4 space-y-1 transition-all duration-200 ${isGovtJobsOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-                                <Link href="/railway-jobs" className="block text-white/80 px-3 py-2 text-sm hover:text-white hover:bg-[#1565C0] rounded-md" onClick={() => setIsMenuOpen(false)}>Railway Jobs</Link>
-                                <Link href="/bank-jobs" className="block text-white/80 px-3 py-2 text-sm hover:text-white hover:bg-[#1565C0] rounded-md" onClick={() => setIsMenuOpen(false)}>Bank Jobs</Link>
-                                <Link href="/defence-jobs" className="block text-white/80 px-3 py-2 text-sm hover:text-white hover:bg-[#1565C0] rounded-md" onClick={() => setIsMenuOpen(false)}>Defence Jobs</Link>
-                                <Link href="/police-jobs" className="block text-white/80 px-3 py-2 text-sm hover:text-white hover:bg-[#1565C0] rounded-md" onClick={() => setIsMenuOpen(false)}>Police Jobs</Link>
-                                <Link href="/teaching-jobs" className="block text-white/80 px-3 py-2 text-sm hover:text-white hover:bg-[#1565C0] rounded-md" onClick={() => setIsMenuOpen(false)}>Teaching Jobs</Link>
+                            <div className={`pl-4 space-y-1 transition-all duration-200 ${isGovtJobsOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+                                {categories.length > 0 ? (
+                                    categories.map((cat) => (
+                                        <Link key={cat.id} href={cat.link} className="block text-white/80 px-3 py-2 text-sm hover:text-white hover:bg-[#1565C0] rounded-md" onClick={() => setIsMenuOpen(false)}>{cat.name}</Link>
+                                    ))
+                                ) : (
+                                    <>
+                                        <Link href="/railway-jobs" className="block text-white/80 px-3 py-2 text-sm hover:text-white hover:bg-[#1565C0] rounded-md" onClick={() => setIsMenuOpen(false)}>Railway Jobs</Link>
+                                        <Link href="/bank-jobs" className="block text-white/80 px-3 py-2 text-sm hover:text-white hover:bg-[#1565C0] rounded-md" onClick={() => setIsMenuOpen(false)}>Bank Jobs</Link>
+                                        <Link href="/defence-jobs" className="block text-white/80 px-3 py-2 text-sm hover:text-white hover:bg-[#1565C0] rounded-md" onClick={() => setIsMenuOpen(false)}>Defence Jobs</Link>
+                                        <Link href="/police-jobs" className="block text-white/80 px-3 py-2 text-sm hover:text-white hover:bg-[#1565C0] rounded-md" onClick={() => setIsMenuOpen(false)}>Police Jobs</Link>
+                                        <Link href="/teaching-jobs" className="block text-white/80 px-3 py-2 text-sm hover:text-white hover:bg-[#1565C0] rounded-md" onClick={() => setIsMenuOpen(false)}>Teaching Jobs</Link>
+                                    </>
+                                )}
                             </div>
                         </div>
                         <Link href="/sarkari-result" className="block text-white px-3 py-2 rounded-md text-base font-medium hover:bg-[#1565C0]" onClick={() => setIsMenuOpen(false)}>Sarkari Result</Link>

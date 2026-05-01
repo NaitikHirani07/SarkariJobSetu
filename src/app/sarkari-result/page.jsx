@@ -1,4 +1,4 @@
-import { sarkariResults } from '@/data/jobsData';
+import { getSarkariResults } from '@/lib/fetchers';
 import SarkariResultClient from '@/components/SarkariResultClient';
 
 export const metadata = {
@@ -7,6 +7,7 @@ export const metadata = {
     keywords: ['sarkari result', 'exam results', 'government job results', 'ssc result', 'upsc result', 'railway result'],
 };
 
-export default function SarkariResultPage() {
-    return <SarkariResultClient sarkariResults={sarkariResults} />;
+export default async function SarkariResultPage() {
+    const results = await getSarkariResults();
+    return <SarkariResultClient sarkariResults={results} />;
 }

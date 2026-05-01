@@ -8,8 +8,17 @@ export default function SarkariResultClient({ sarkariResults }) {
     const resultsPerPage = 10;
     const indexOfLastResult = currentPage * resultsPerPage;
     const indexOfFirstResult = indexOfLastResult - resultsPerPage;
-    const currentResults = sarkariResults.slice(indexOfFirstResult, indexOfLastResult);
+    const currentResults = (sarkariResults || []).slice(indexOfFirstResult, indexOfLastResult);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    if (!sarkariResults || sarkariResults.length === 0) {
+        return (
+            <div className="max-w-[1400px] mx-auto px-4 py-8 bg-white min-h-screen text-center">
+                <h1 className="text-3xl font-bold mb-6 bg-gray-200 py-3 text-black">Sarkari Results</h1>
+                <p className="text-gray-600 mt-10">No results found at the moment. Check back later!</p>
+            </div>
+        );
+    }
 
     return (
         <div className="max-w-[1400px] mx-auto px-4 py-8 bg-white min-h-screen">

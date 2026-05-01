@@ -1,4 +1,4 @@
-import { govtJobsList } from '@/data/jobsData';
+import { getJobsByCategory } from '@/lib/fetchers';
 import CentralGovtJobsClient from '@/components/CentralGovtJobsClient';
 
 export const metadata = {
@@ -7,12 +7,9 @@ export const metadata = {
     keywords: ['government jobs', 'sarkari naukri', 'govt job notifications', 'latest govt jobs', 'railway jobs', 'bank jobs'],
 };
 
-export default function GovtJobsPage() {
-    // For general GovtJobsPage, we show all jobs or filter as needed.
-    // For now, mirroring central govt jobs but with broader metadata.
-    const centralGovtJobs = govtJobsList.filter(job => 
-        Array.isArray(job.category) ? job.category.includes('CentralGovtJob') : job.category === 'CentralGovtJob'
-    );
+export default async function GovtJobsPage() {
+    // We can show all 'GovtJob' category jobs here
+    const allGovtJobs = await getJobsByCategory("GovtJob");
 
-    return <CentralGovtJobsClient centralGovtJobs={centralGovtJobs} />;
+    return <CentralGovtJobsClient centralGovtJobs={allGovtJobs} />;
 }

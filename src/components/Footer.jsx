@@ -4,32 +4,22 @@ const Footer = () => {
     const jobsByQualification = [
         { name: '10th Pass', link: '/10th-pass-govt-jobs' },
         { name: '12th Pass', link: '/12th-pass-govt-jobs' },
-        { name: 'Graduate', link: '/graduate-jobs' },
-        { name: 'Post Graduate', link: '/post-graduate-jobs' },
-        { name: 'Diploma', link: '/diploma-govt-jobs' },
-        { name: 'Engineering', link: '/engineering-jobs' },
-        { name: 'Medical', link: '/medical-jobs' },
+        { name: 'Graduation', link: '/graduate-jobs' },
+        { name: 'Post Graduation', link: '/post-graduate-jobs' },
     ];
     const popularJobs = [
-        { name: 'Bank Jobs', link: '/bank-jobs' },
-        { name: 'Defence Jobs', link: '/defence-jobs' },
-        { name: 'Police Jobs', link: '/police-jobs' },
+        { name: 'Latest Jobs', link: '/latest-jobs' },
         { name: 'Railway Jobs', link: '/railway-jobs' },
+        { name: 'Bank Jobs', link: '/bank-jobs' },
         { name: 'SSC Jobs', link: '/ssc-jobs' },
-        { name: 'Teaching Jobs', link: '/teaching-jobs' },
-        { name: 'UPSC Jobs', link: '/upsc-jobs' },
+        { name: 'Gujarat Jobs', link: '/gujarat-jobs' },
     ];
     const popularExams = [
-        { name: 'IBPS PO', link: '/ibps-po' }, { name: 'RRB Group D', link: '/rrb-group-d' },
-        { name: 'RRB JE', link: '/rrb-je' }, { name: 'RRB NTPC', link: '/rrb-ntpc' },
+        { name: 'IBPS PO', link: '/ibps-po' }, { name: 'RRB NTPC', link: '/rrb-ntpc' },
         { name: 'SSC CGL', link: '/ssc-cgl' }, { name: 'SSC GD', link: '/ssc-gd' },
-        { name: 'UPP Constable', link: '/upp-constable' }, { name: 'UPSC IAS', link: '/upsc-ias' },
     ];
     const stateWiseJobs = [
-        { name: 'Central Govt.', link: '/central-govt-jobs' }, { name: 'Bihar', link: '/bihar-jobs' },
-        { name: 'Chhattisgarh', link: '/chhattisgarh-jobs' }, { name: 'Haryana', link: '/haryana-jobs' },
-        { name: 'Jharkhand', link: '/jharkhand-jobs' }, { name: 'Madhya Pradesh', link: '/madhya-pradesh-jobs' },
-        { name: 'Rajasthan', link: '/rajasthan-jobs' }, { name: 'Uttar Pradesh', link: '/uttar-pradesh-jobs' },
+        { name: 'Latest Jobs', link: '/latest-jobs' },
     ];
 
     return (

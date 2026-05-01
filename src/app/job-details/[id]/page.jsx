@@ -1,12 +1,15 @@
 import Link from 'next/link';
-import { govtJobsList } from '@/data/jobsData';
+import prisma from '@/lib/prisma';
 import { sidebarData } from '@/data/assets';
 import { SidebarSection } from '@/components/JobPageTemplate';
 import CommentForm from '@/components/CommentForm';
 
 export async function generateMetadata({ params }) {
     const { id } = await params;
-    const job = govtJobsList.find(item => item.id === parseInt(id));
+    
+    const job = await prisma.job.findUnique({
+        where: { id: parseInt(id) }
+    });
     
     if (!job) return { title: 'Job Not Found' };
 
@@ -28,11 +31,41 @@ export async function generateMetadata({ params }) {
 
 export default async function JobDetailsPage({ params }) {
     const { id } = await params;
-    const job = govtJobsList.find(item => item.id === parseInt(id));
+    
+    const job = await prisma.job.findUnique({
+        where: { id: parseInt(id) },
+        include: {
+            notifications: true,
+            links: true,
+            selectionProcess: true,
+            ageRelaxations: true,
+            applicationFees: true
+        }
+    });
 
     if (!job) return <div className="text-center py-20">Job not found</div>;
 
-    const { details } = job;
+    // Mapping back to the previous structure for UI compatibility
+    const details = {
+        title: job.title,
+        postDescription: job.postDescription,
+        notifications: job.notifications,
+        postDetails: {
+            title: `${job.postName} Details`,
+            qualificationDetails: job.qualification,
+            salary: job.salary,
+            ageLimit: job.ageLimit
+        },
+        importantDates: {
+            startDate: job.startDate,
+            lastDate: job.lastDate,
+            examDate: job.examDate
+        },
+        importantLinks: job.links,
+        selectionProcess: job.selectionProcess.map(s => s.step),
+        ageRelaxation: job.ageRelaxations.map(r => r.rule),
+        applicationFee: job.applicationFees.map(f => f.fee)
+    };
 
     // JSON-LD for JobPosting
     const jsonLd = {
@@ -77,6 +110,7 @@ export default async function JobDetailsPage({ params }) {
                     <h1 className="text-2xl font-bold text-[#1976D2] mb-2">{details.title}</h1>
                     <p className="text-sm text-gray-600 mb-6">{details.postDescription}</p>
                     <div className="bg-[#EF5350] text-white text-center py-3 font-bold text-2xl mb-6 rounded-sm">{job.organization.split(' ')[0]} Recruitment</div>
+                    {/* UI remains the same... using details object */}
                     <div className="flex justify-center mb-6">
                         <div className="border border-blue-500 p-2 inline-block">
                             <div className="bg-[#1976D2] text-white px-8 py-2 font-bold text-xl flex items-center justify-center gap-2">
