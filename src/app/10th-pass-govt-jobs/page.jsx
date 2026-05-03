@@ -1,5 +1,5 @@
 import JobPageTemplate from '@/components/JobPageTemplate';
-import prisma from '@/lib/prisma';
+import { getJobsByCategory } from '@/lib/fetchers';
 
 export const metadata = {
     title: '10th Pass Govt Jobs 2026 - Latest Vacancies for 10th Pass Candidates',
@@ -7,20 +7,7 @@ export const metadata = {
 };
 
 export default async function TenthPassGovtJobsPage() {
-    const jobs = await prisma.job.findMany({
-        where: {
-            categories: {
-                some: {
-                    category: {
-                        name: "10th Pass Govt Job"
-                    }
-                }
-            }
-        },
-        orderBy: {
-            createdAt: 'desc'
-        }
-    });
+    const jobs = await getJobsByCategory("10th Pass Govt Job");
 
     return (
         <JobPageTemplate 

@@ -1,5 +1,5 @@
 import JobPageTemplate from '@/components/JobPageTemplate';
-import prisma from '@/lib/prisma';
+import { getJobsByCategory } from '@/lib/fetchers';
 
 export const metadata = {
     title: 'Bank Jobs 2026 - Latest IBPS, SBI, RBI & Public Sector Bank Recruitment',
@@ -7,20 +7,8 @@ export const metadata = {
 };
 
 export default async function BankJobsPage() { 
-    const jobs = await prisma.job.findMany({
-        where: {
-            categories: {
-                some: {
-                    category: {
-                        name: 'BankJob'
-                    }
-                }
-            }
-        },
-        orderBy: {
-            createdAt: 'desc'
-        }
-    });
+    // Use the central fetcher to get jobs (handles database sync + expiration filtering)
+    const jobs = await getJobsByCategory("BankJob");
 
     return (
         <JobPageTemplate 

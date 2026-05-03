@@ -2,9 +2,9 @@ import Link from 'next/link';
 
 const Footer = () => {
     const jobsByQualification = [
-        { name: '10th Pass', link: '/10th-pass-govt-jobs' },
-        { name: '12th Pass', link: '/12th-pass-govt-jobs' },
-        { name: 'Graduation', link: '/graduate-jobs' },
+        { name: '10th Pass', link: '/10th-pass-jobs' },
+        { name: '12th Pass', link: '/12th-pass-jobs' },
+        { name: 'Graduation', link: '/any-graduate-jobs' },
         { name: 'Post Graduation', link: '/post-graduate-jobs' },
     ];
     const popularJobs = [
@@ -42,6 +42,7 @@ const Footer = () => {
                             ))}
                         </ul>
                     </div>
+                    {/* 
                     <div>
                         <h3 className="text-lg font-bold text-gray-800 mb-4">Popular Exams</h3>
                         <ul className="space-y-2">
@@ -58,6 +59,16 @@ const Footer = () => {
                             ))}
                         </ul>
                     </div>
+                    */}
+                    <div className="lg:col-span-2">
+                        <h3 className="text-lg font-bold text-gray-800 mb-4">Important Links</h3>
+                        <ul className="space-y-2">
+                            <li><Link href="/about-us" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">About Us</Link></li>
+                            <li><Link href="/contact-us" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">Contact Us</Link></li>
+                            <li><Link href="/privacy-policy" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">Privacy Policy</Link></li>
+                            <li><Link href="/disclaimer" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">Disclaimer</Link></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div className="bg-[#FFEBEE] border-l-4 border-red-500 mx-4 lg:mx-8 p-4 my-4">
@@ -70,15 +81,8 @@ const Footer = () => {
             <div className="border-t border-gray-300 bg-white">
                 <div className="max-w-7xl mx-auto px-4 py-4">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <div className="flex flex-wrap justify-center md:justify-start gap-2 text-sm">
-                            <Link href="/privacy-policy" className="text-gray-600 hover:text-blue-600 transition-colors">Privacy Policy</Link>
-                            <span className="text-gray-400">|</span>
-                            <Link href="/disclaimer" className="text-gray-600 hover:text-blue-600 transition-colors">Disclaimer</Link>
-                            <span className="text-gray-400">|</span>
-                            <Link href="/trust-security" className="text-gray-600 hover:text-blue-600 transition-colors">Trust & Security</Link>
-                            <span className="text-gray-400">|</span>
-                            <Link href="/contact-us" className="text-gray-600 hover:text-blue-600 transition-colors">Contact Us</Link>
-                            <span className="text-gray-400">|</span>
+                        <div className="flex flex-wrap justify-center md:justify-start gap-2 text-sm text-gray-500">
+                            Professional Job Portal for Government Vacancies
                         </div>
                         <p className="text-sm text-gray-600">© 2025 <span className="text-red-500 font-medium">SabhiJob.Com</span>. All rights reserved.</p>
                     </div>

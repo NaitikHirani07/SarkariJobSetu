@@ -7,12 +7,12 @@ export const metadata = {
 };
 
 export default async function LatestJobsPage() {
-    // "Latest Jobs" maps to the "GovtJob" category in the database
-    const jobs = await getJobsByCategory("GovtJob");
+    // Search for "LatestJob" to match the homepage branding
+    const jobs = await getJobsByCategory("LatestJob");
 
     return (
         <JobPageTemplate 
-            category="GovtJob" 
+            category="LatestJob" 
             title="Latest Government Jobs" 
             description="Explore the newest government job openings across India." 
             jobs={jobs}

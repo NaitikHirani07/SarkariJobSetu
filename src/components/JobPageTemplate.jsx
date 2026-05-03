@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { sidebarData } from '@/data/assets';
 import { useShop } from '@/context/ShopContext';
+import AdBanner from '@/components/AdBanner';
+import CommentList from '@/components/CommentList';
 
 const JobPageTemplate = ({ category, title, description, jobs = [] }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -20,9 +22,10 @@ const JobPageTemplate = ({ category, title, description, jobs = [] }) => {
     };
 
     return (
-        <div className="max-w-7xl mx-auto px-4 py-8 bg-white">
+        <div className="max-w-screen-2xl mx-auto px-[40px] py-8">
             <div className="flex flex-col lg:flex-row gap-8">
                 <div className="flex-1">
+                    <AdBanner slot="top-ad" className="mb-4" />
                     <h1 className="text-2xl font-bold text-gray-800 border-b-2 border-blue-600 pb-2 mb-4">{title}</h1>
                     <div className="text-sm text-gray-700 mb-6 font-medium">
                         <p className="mb-2 italic">{description}</p>
@@ -77,10 +80,15 @@ const JobPageTemplate = ({ category, title, description, jobs = [] }) => {
                         </div>
                     </div>
                     <SidebarSection title="Government Job vacancies" items={sidebarData.jobVacancies} />
+                    {/* 
                     <SidebarSection title="Post Wise Government Vacancy" items={sidebarData.postWiseVacancy} cols={2} />
                     <SidebarSection title="State Wise Govt Jobs in India" items={sidebarData.stateWiseJobs} cols={2} />
-                    <SidebarSection title="Govt Recruitment by Category" items={sidebarData.recruitmentByCategory} cols={2} />
+                    <SidebarSection title="Govt Recruitment by Category" items={sidebarData.recruitmentByCategory} cols={2} /> 
+                    */}
                     <SidebarSection title="List of Jobs by Qualification" items={sidebarData.listByQualification} cols={2} />
+                    <AdBanner slot="category-sidebar-1" className="mt-6" />
+                    <CommentList jobId="" />
+                    <AdBanner slot="category-sidebar-2" className="mt-6" />
                 </div>
             </div>
         </div>

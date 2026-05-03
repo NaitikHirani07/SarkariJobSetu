@@ -50,6 +50,8 @@ export const metadata = {
 
 import { getAssetCategories } from '@/lib/fetchers';
 
+import ClientLayoutWrapper from '@/components/ClientLayoutWrapper';
+
 export default async function RootLayout({ children }) {
     const categories = await getAssetCategories();
     
@@ -57,13 +59,9 @@ export default async function RootLayout({ children }) {
         <html lang="en">
             <body>
                 <ShopContextProvider>
-                    <div className="min-h-screen bg-gray-100">
-                        <Navbar categories={categories} />
-                        <main>
-                            {children}
-                        </main>
-                        <Footer />
-                    </div>
+                    <ClientLayoutWrapper categories={categories}>
+                        {children}
+                    </ClientLayoutWrapper>
                 </ShopContextProvider>
             </body>
         </html>

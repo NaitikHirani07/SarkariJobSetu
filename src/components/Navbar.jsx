@@ -58,14 +58,14 @@ const Navbar = ({ categories = [] }) => {
                                 <span className="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded ml-1 font-medium">JOBS</span>
                             </Link>
                         </div>
-                        <div className="hidden md:flex items-center space-x-1">
-                            <Link href="/" className="text-white bg-[#1565C0] px-4 py-2 text-sm font-medium hover:bg-[#1565C0] transition-colors">Home</Link>
-                            <div className="relative group">
-                                <button className="text-white px-4 py-2 text-sm font-medium flex items-center hover:bg-[#1565C0] transition-colors" onMouseEnter={() => setIsGovtJobsOpen(true)} onMouseLeave={() => setIsGovtJobsOpen(false)}>
+                        <div className="hidden md:flex items-center space-x-0 h-full">
+                            <Link href="/" className="text-white bg-[#1565C0] px-4 h-full flex items-center text-sm font-medium hover:bg-[#1565C0] transition-colors">Home</Link>
+                            <div className="relative group h-full">
+                                <button className="text-white px-4 h-full text-sm font-medium flex items-center hover:bg-[#1565C0] transition-colors" onMouseEnter={() => setIsGovtJobsOpen(true)} onMouseLeave={() => setIsGovtJobsOpen(false)}>
                                     Govt Jobs
                                     <svg className={`ml-1 w-4 h-4 transition-transform ${isGovtJobsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                                 </button>
-                                <div className={`absolute left-0 mt-0 w-48 bg-white rounded-md shadow-lg py-1 z-50 transform transition-all duration-200 ${isGovtJobsOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onMouseEnter={() => setIsGovtJobsOpen(true)} onMouseLeave={() => setIsGovtJobsOpen(false)}>
+                                <div className={`absolute left-0 top-full w-48 bg-white rounded-b-md shadow-lg py-1 z-50 transform transition-all duration-200 ${isGovtJobsOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onMouseEnter={() => setIsGovtJobsOpen(true)} onMouseLeave={() => setIsGovtJobsOpen(false)}>
                                     {categories.length > 0 ? (
                                         categories.map((cat) => (
                                             <Link key={cat.id} href={cat.link} className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">{cat.name}</Link>
@@ -81,11 +81,12 @@ const Navbar = ({ categories = [] }) => {
                                     )}
                                 </div>
                             </div>
-                            <Link href="/sarkari-result" className="text-white px-4 py-2 text-sm font-medium hover:bg-[#1565C0] transition-colors">Sarkari Result</Link>
-                            <Link href="/central-govt-jobs" className="text-white px-4 py-2 text-sm font-medium hover:bg-[#1565C0] transition-colors">Central Govt Jobs</Link>
-                            <button onClick={openSearch} className="text-white p-2 hover:bg-[#1565C0] transition-colors rounded">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                            </button>
+                            <Link href="/sarkari-result" className="text-white px-4 h-full flex items-center text-sm font-medium hover:bg-[#1565C0] transition-colors">Sarkari Result</Link>
+                            <div className="h-full flex items-center px-2">
+                                <button onClick={openSearch} className="text-white p-2 hover:bg-[#1565C0] transition-colors rounded">
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                                </button>
+                            </div>
                         </div>
                         <div className="md:hidden flex items-center gap-2">
                             <button onClick={openSearch} className="text-white p-2 hover:bg-[#1565C0] transition-colors rounded">
@@ -124,7 +125,6 @@ const Navbar = ({ categories = [] }) => {
                             </div>
                         </div>
                         <Link href="/sarkari-result" className="block text-white px-3 py-2 rounded-md text-base font-medium hover:bg-[#1565C0]" onClick={() => setIsMenuOpen(false)}>Sarkari Result</Link>
-                        <Link href="/central-govt-jobs" className="block text-white px-3 py-2 rounded-md text-base font-medium hover:bg-[#1565C0]" onClick={() => setIsMenuOpen(false)}>Central Govt Jobs</Link>
                     </div>
                 </div>
             </nav>

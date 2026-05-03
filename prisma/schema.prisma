@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Job {
-  id              Int                @id @default(autoincrement())
+  id              String             @id @default(uuid())
   organization    String
   postName        String
   qualification   String
@@ -20,13 +20,35 @@ model Job {
   ageLimit        String?
   startDate       String?
   examDate        String?
+  officialWebsite String?
+  mode            String?
+  paymentMode     String?
+  howToApply      String?            @db.Text
   createdAt       DateTime           @default(now())
+  image           String?            @db.Text
   categories      JobCategory[]
   notifications   JobNotification[]
   links           JobLink[]
   selectionProcess SelectionProcess[]
   ageRelaxations   AgeRelaxation[]
   applicationFees  ApplicationFee[]
+  comments         Comment[]
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  jobId     String?
+  content   String   @db.Text
+  name      String
+  email     String
+  website   String?
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  job       Job?     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  
+  parentId  String?
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[] @relation("CommentReplies")
 }
 
 model Category {
@@ -36,7 +58,7 @@ model Category {
 }
 
 model JobCategory {
-  jobId      Int
+  jobId      String
   categoryId Int
   job        Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
@@ -46,7 +68,7 @@ model JobCategory {
 
 model JobNotification {
   id    Int    @id @default(autoincrement())
-  jobId Int
+  jobId String
   label String
   value String
   job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
@@ -54,7 +76,7 @@ model JobNotification {
 
 model JobLink {
   id    Int    @id @default(autoincrement())
-  jobId Int
+  jobId String
   label String
   url   String @db.Text
   job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
@@ -62,21 +84,21 @@ model JobLink {
 
 model SelectionProcess {
   id    Int    @id @default(autoincrement())
-  jobId Int
+  jobId String
   step  String
   job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
 }
 
 model AgeRelaxation {
   id    Int    @id @default(autoincrement())
-  jobId Int
+  jobId String
   rule  String
   job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
 }
 
 model ApplicationFee {
   id    Int    @id @default(autoincrement())
-  jobId Int
+  jobId String
   fee   String
   job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
 }
@@ -107,5 +129,14 @@ model FAQ {
   id       Int    @id @default(autoincrement())
   question String @db.Text
   answer   String @db.Text
+}
+
+model Contact {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  subject   String
+  message   String   @db.Text
+  createdAt DateTime @default(now())
 }
 

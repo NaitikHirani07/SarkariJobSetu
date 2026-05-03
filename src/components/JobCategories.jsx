@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { sarkariResultSections, sarkariResultInfo } from '@/data/assets'; 
+import AdBanner from './AdBanner';
 
 const DefenceIcon = () => (
     <svg className="w-12 h-12 text-[#2196F3]" viewBox="0 0 64 64" fill="currentColor">
@@ -44,6 +45,7 @@ const JobCategories = ({
                         ))}
                     </div>
                 </div>
+                <AdBanner slot="home-top" className="mt-8" />
                 <div className="mt-8 border border-[#E3F2FD] rounded-lg overflow-hidden bg-white shadow-sm">
                     <div className="bg-white py-3 border-b border-[#E3F2FD]">
                         <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-[#1976D2] text-center">Education Wise Govt Vacancies</h2>
@@ -54,6 +56,7 @@ const JobCategories = ({
                         ))}
                     </div>
                 </div>
+{/* 
                 <div className="mt-8 border border-[#E3F2FD] rounded-lg overflow-hidden bg-white shadow-sm">
                     <div className="bg-white py-3 border-b border-[#E3F2FD]">
                         <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-[#FF9800] text-center">Post Wise Recruitment List</h2>
@@ -63,7 +66,8 @@ const JobCategories = ({
                             <Link key={item.id} href={item.link} className={`px-4 py-3 sm:px-6 sm:py-4 text-[#1976D2] hover:bg-[#E3F2FD] hover:text-[#1565C0] transition-colors duration-200 font-medium text-sm sm:text-base ${index < postWiseRecruitment.length - 4 ? 'border-b border-gray-100' : ''} ${(index + 1) % 4 !== 0 ? 'lg:border-r border-gray-100' : ''} ${(index + 1) % 3 !== 0 ? 'md:border-r' : 'md:border-r-0'} ${(index + 1) % 2 !== 0 ? 'sm:border-r' : 'sm:border-r-0'}`}>{item.name}</Link>
                         ))}
                     </div>
-                </div>
+                </div> 
+*/}
                 <div className="mt-8 space-y-6">
                     {sarkariResultSections.map((section) => (
                         <div key={section.id} className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
@@ -94,6 +98,7 @@ const JobCategories = ({
                         </div>
                     </div>
                 </div>
+                <AdBanner slot="home-bottom" className="mt-8" />
             </div>
         </section>
     );
